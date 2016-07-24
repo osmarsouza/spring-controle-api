@@ -1,4 +1,4 @@
-package br.com.osmarsouza.api.repository;
+package br.com.osmarsouza.api.model;
 
 import java.io.Serializable;
 import java.sql.Date;

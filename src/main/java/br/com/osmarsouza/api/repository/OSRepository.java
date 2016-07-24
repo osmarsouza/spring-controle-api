@@ -14,7 +14,5 @@ import br.com.osmarsouza.api.model.OS;
 @RepositoryRestResource(collectionResourceRel = "os", path = "os")
 public interface OSRepository extends PagingAndSortingRepository<OS, Long> {
 
-    //List<Pessoa> findByNome(@Param("nome") String nome);
-
 }
 

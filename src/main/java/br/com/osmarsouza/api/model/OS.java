@@ -13,8 +13,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import br.com.osmarsouza.api.repository.TipoGarantia;
-
 @Entity
 public class OS implements Serializable {
 

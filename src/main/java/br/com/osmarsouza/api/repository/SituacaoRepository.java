@@ -8,10 +8,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
-import br.com.osmarsouza.api.model.Pessoa;
+import br.com.osmarsouza.api.model.SituacaoOS;
 
 
-@RepositoryRestResource(collectionResourceRel = "pessoa", path = "pessoa")
-public interface PessoaRepository extends PagingAndSortingRepository<Pessoa, Long> {
+@RepositoryRestResource(collectionResourceRel = "situacoes", path = "situacoes")
+public interface SituacaoRepository extends PagingAndSortingRepository<SituacaoOS, Long> {
 
 }
