@@ -2,12 +2,16 @@ package br.com.osmarsouza.api.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import br.com.osmarsouza.api.repository.TipoGarantia;
 
@@ -46,6 +50,12 @@ public class OS implements Serializable {
 	private Date created_at;
 	private Date updated_at;
 	private Date deleted_at;
+	
+	@ManyToMany
+	@JoinTable(name="situacao_os", joinColumns=
+	{@JoinColumn(name="os_id")}, inverseJoinColumns=
+  	{@JoinColumn(name="id")})
+	private List<SituacaoOS> situacoes;
 	
 	public long getId() {
 		return id;
@@ -137,7 +147,16 @@ public class OS implements Serializable {
 	public void setDeleted_at(Date deleted_at) {
 		this.deleted_at = deleted_at;
 	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}		
+	}
+	
+	public List<SituacaoOS> getSituacoes() {
+		return situacoes;
+	}
+	public void setSituacoes(List<SituacaoOS> situacoes) {
+		this.situacoes = situacoes;
+	}
+	
 }
