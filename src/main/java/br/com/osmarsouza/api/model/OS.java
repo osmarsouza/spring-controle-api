@@ -14,15 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class OS implements Serializable {
+public class OS extends AbstractModel<Long> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	private long id;
 	@ManyToOne
 	@JoinColumn(name="idpessoa")
 	private Pessoa pessoa;
@@ -55,12 +53,7 @@ public class OS implements Serializable {
   	{@JoinColumn(name="id")})
 	private List<SituacaoOS> situacoes;
 	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
+	
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
