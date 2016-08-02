@@ -34,7 +34,9 @@ public class PessoaController {
 
     @RequestMapping(method = RequestMethod.GET, params = {"nome"})
     public ResponseEntity<Collection<Pessoa>> findPieWithName(@RequestParam(value="nome") String nome) {
-        return new ResponseEntity<>(repository.findPessoaWithPartOfName(nome), HttpStatus.OK);
+        //return new ResponseEntity<>(repository.findPessoaWithPartOfName(nome), HttpStatus.OK);
+    	return new ResponseEntity<>(repository.findByNomeContaining(nome), HttpStatus.OK);
+    	
     }	
 	
 	
