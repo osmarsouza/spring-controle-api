@@ -3,6 +3,8 @@ package br.com.osmarsouza.api.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Users extends AbstractModel<Long> {
 
@@ -12,6 +14,7 @@ public class Users extends AbstractModel<Long> {
 	private static final long serialVersionUID = 1L;
 	private String name;
     private String email;
+    @JsonIgnore
     private String password;
     
 

@@ -2,6 +2,8 @@ package br.com.osmarsouza.api.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -25,6 +27,8 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Long> {
 	
 	//@Query("SELECT p FROM Pessoa p WHERE p.nome LIKE CONCAT('%',:nome,'%')")
 	//List<Pessoa> findPessoaWithPartOfName(@Param("nome") String nome);
+	
+	Page<Pessoa> findAll(Pageable pageAble);
 	
 	List<Pessoa> findByNomeContaining(String nome);
 	

@@ -3,6 +3,9 @@ package br.com.osmarsouza.api.controller;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.osmarsouza.api.model.OS;
 import br.com.osmarsouza.api.model.Pessoa;
 import br.com.osmarsouza.api.repository.PessoaRepository;
 
@@ -21,6 +25,16 @@ public class PessoaController {
 	
 	@Autowired
 	private PessoaRepository repository;
+	
+	@RequestMapping(method = RequestMethod.GET, params = {"page", "offset"})
+	public Page<Pessoa> getAll(@RequestParam("page") int page, @RequestParam("offset") int offset) {
+	
+		
+		PageRequest pageRequest = new PageRequest(page - 1, offset, Sort.Direction.ASC, "nome");
+		
+		return repository.findAll(pageRequest);		
+	}
+
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Collection<Pessoa>> getAllPessoas() {

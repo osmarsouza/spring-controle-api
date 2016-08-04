@@ -22,9 +22,14 @@ public class SituacaoOS implements Serializable {
 	
 	@Id
 	private long id;
+	
+	/*
 	@ManyToOne
 	@JoinColumn(name="os_id")
 	private OS os;
+	*/
+	private long os_id;
+	
 	@ManyToOne
 	@JoinColumn(name="tipo_situacao_id")
 	private TipoSituacao tipoSituacao;
@@ -37,6 +42,7 @@ public class SituacaoOS implements Serializable {
 	private String observacoes;
 	private Date created_at;
 	private Date updated_at;
+	private Date deleted_at;
 	
 	public long getId() {
 		return id;
@@ -44,12 +50,23 @@ public class SituacaoOS implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	/*
 	public OS getOs() {
 		return os;
 	}
 	public void setOs(OS os) {
 		this.os = os;
 	}
+	*/
+	public long getOs_id() {
+		return os_id;
+	}
+	
+	public void SetOs_id(long os_id) {
+		this.os_id = os_id;
+	}
+	
 	public TipoSituacao getTipoSituacao() {
 		return tipoSituacao;
 	}

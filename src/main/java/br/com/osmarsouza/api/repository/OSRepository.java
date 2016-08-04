@@ -2,7 +2,9 @@ package br.com.osmarsouza.api.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -14,20 +16,13 @@ import br.com.osmarsouza.api.model.OS;
 import br.com.osmarsouza.api.model.Pessoa;
 
 
-public interface OSRepository extends CrudRepository<OS, Long> {
+public interface OSRepository extends JpaRepository<OS, Long> {
 	
-	final String getAllPostsByRank= "from OS order by created_at DESC";
-	
-	OS findOne(Long primaryKey);
-	
-	@Query("SELECT P.nome, P.telefone, O, A.aparelho, M.nome_marca"
-			+ " FROM OS O "
-			+ " inner join O.pessoa P "
-			+ " inner join O.aparelho A "
-			+ " inner join O.marca M")
-	List<OS> getAllOSByData(Pageable pageable); 
+	@Query("SELECT O FROM OS O ORDER BY O.created_at Desc")
+	Page<OS> getAllOSByCreated_at(Pageable pageable); 
 
 }
+
 
 
 

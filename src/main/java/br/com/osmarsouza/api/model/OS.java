@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -47,12 +48,14 @@ public class OS extends AbstractModel<Long> {
 	private Date updated_at;
 	private Date deleted_at;
 	
-	@ManyToMany
+	/*
+
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="situacao_os", joinColumns=
 	{@JoinColumn(name="os_id")}, inverseJoinColumns=
   	{@JoinColumn(name="id")})
 	private List<SituacaoOS> situacoes;
-	
+	*/
 	
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -143,11 +146,13 @@ public class OS extends AbstractModel<Long> {
 		return serialVersionUID;
 	}
 	
+	/*
 	public List<SituacaoOS> getSituacoes() {
 		return situacoes;
 	}
 	public void setSituacoes(List<SituacaoOS> situacoes) {
 		this.situacoes = situacoes;
 	}
+	*/
 	
 }
