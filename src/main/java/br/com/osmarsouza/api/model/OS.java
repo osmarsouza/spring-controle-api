@@ -33,9 +33,9 @@ public class OS extends AbstractModel<Long> {
 	private Marca marca;	
 	private String modelo;
 	@Column(name="numeroserie")
-	private String numerSerie;
+	private String numeroserie;
 	@Column(name="defeitoreclamado")
-	private String defeitoReclamado;
+	private String defeitoreclamado;
 	private String retirado;
 	@ManyToOne
 	@JoinColumn(name="tipogarantia_id")
@@ -81,17 +81,17 @@ public class OS extends AbstractModel<Long> {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	public String getNumerSerie() {
-		return numerSerie;
+	public String getNumeroSerie() {
+		return numeroserie;
 	}
-	public void setNumerSerie(String numerSerie) {
-		this.numerSerie = numerSerie;
+	public void setNumeroSerie(String numeroSerie) {
+		this.numeroserie = numeroSerie;
 	}
 	public String getDefeitoReclamado() {
-		return defeitoReclamado;
+		return defeitoreclamado;
 	}
 	public void setDefeitoReclamado(String defeitoReclamado) {
-		this.defeitoReclamado = defeitoReclamado;
+		this.defeitoreclamado = defeitoReclamado;
 	}
 	public String getRetirado() {
 		return retirado;

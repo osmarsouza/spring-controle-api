@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import br.com.osmarsouza.api.model.DadosReparo;
+import br.com.osmarsouza.api.model.EmptyJsonResponse;
 import br.com.osmarsouza.api.model.OS;
 import br.com.osmarsouza.api.model.SituacaoOS;
 import br.com.osmarsouza.api.model.Users;
@@ -67,8 +68,13 @@ public class OSController {
 	}
 	
 	@RequestMapping("/{id}/dadosreparo")
-	public DadosReparo getDadosReparo(@PathVariable long id) {
-		return dadosReparoRepository.findByos_id(id);
+	public ResponseEntity<?> getDadosReparo(@PathVariable long id) {
+		DadosReparo dadosReparo = dadosReparoRepository.findByos_id(id);
+		
+		if(dadosReparo != null)
+		   return new ResponseEntity<>(dadosReparo, HttpStatus.OK);
+		else
+		   return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);	
 		
 	}	
 }

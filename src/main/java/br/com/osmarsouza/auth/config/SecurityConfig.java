@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 /**
  * Created by Tomasz Kucharzyk
  */
-@Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
+//@Configuration
+//@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
