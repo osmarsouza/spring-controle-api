@@ -19,6 +19,10 @@ public class Users extends AbstractModel<Long> {
     
 
     public Users() {}
+    
+    public Users(long id) {
+    	this.setId(id); 	
+    }
 
 
     public Users(String name, String email, String login, String password) {

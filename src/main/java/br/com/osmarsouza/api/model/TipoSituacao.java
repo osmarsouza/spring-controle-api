@@ -16,11 +16,21 @@ public class TipoSituacao implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	public static final int TIPO_SITUACAO_AORCAR = 1; 
+	
 	@Id
 	private long id;
 	private String desc_situacao;
 	private Date created_at;
 	private Date updated_at;
+	
+	public TipoSituacao() {
+		
+	}
+	
+	public TipoSituacao(long id) {
+		this.id = id;
+	}
 	
 	public long getId() {
 		return id;

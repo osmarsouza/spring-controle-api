@@ -1,14 +1,12 @@
 package br.com.osmarsouza.api.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -43,6 +41,19 @@ public class SituacaoOS implements Serializable {
 	private Date created_at;
 	private Date updated_at;
 	private Date deleted_at;
+	
+	public SituacaoOS() {
+		
+	}
+	
+	public SituacaoOS(long os_id, int tipoSituacao_id, long user_id) {
+		this.os_id = os_id;
+		this.tipoSituacao = new TipoSituacao(tipoSituacao_id);
+		this.usuario = new Users(user_id);
+		this.created_at = new Date();
+		this.updated_at = new Date();
+	}
+
 	
 	public long getId() {
 		return id;
@@ -105,5 +116,5 @@ public class SituacaoOS implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
+	}	
 }

@@ -34,4 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
 		
 	}
+	
+	
 }

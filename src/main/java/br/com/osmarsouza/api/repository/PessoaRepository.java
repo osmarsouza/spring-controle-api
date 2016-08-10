@@ -25,15 +25,14 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Long> {
 
 	List<Pessoa> findByNome(String nome);
 	
-	//@Query("SELECT p FROM Pessoa p WHERE p.nome LIKE CONCAT('%',:nome,'%')")
-	//List<Pessoa> findPessoaWithPartOfName(@Param("nome") String nome);
-	
 	Page<Pessoa> findAll(Pageable pageAble);
-	
+		
 	List<Pessoa> findByNomeContaining(String nome);
+	List<Pessoa> findByTelefoneContaining(String telefone);
 	
 	List<Pessoa> findByNomeLike(String nome);
 	List<Pessoa> findByNomeStartingWith(String nome);
 	List<Pessoa> findByNomeEndingWith(String nome);
 
 }
+

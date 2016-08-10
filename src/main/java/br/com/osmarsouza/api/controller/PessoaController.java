@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.osmarsouza.api.model.OS;
 import br.com.osmarsouza.api.model.Pessoa;
+import br.com.osmarsouza.api.model.VWPessoaWithOS;
 import br.com.osmarsouza.api.repository.PessoaRepository;
+import br.com.osmarsouza.api.repository.VWPessoaWithOSRepository;
 
 @RestController
 @RequestMapping("pessoas")
@@ -26,13 +28,17 @@ public class PessoaController {
 	@Autowired
 	private PessoaRepository repository;
 	
+	@Autowired
+	private VWPessoaWithOSRepository vwPessoaWithOSRepository;
+	
+	
 	@RequestMapping(method = RequestMethod.GET, params = {"page", "offset"})
-	public Page<Pessoa> getAll(@RequestParam("page") int page, @RequestParam("offset") int offset) {
+	public Page<VWPessoaWithOS> getAll(@RequestParam("page") int page, @RequestParam("offset") int offset) {
 	
 		
 		PageRequest pageRequest = new PageRequest(page - 1, offset, Sort.Direction.ASC, "nome");
 		
-		return repository.findAll(pageRequest);		
+		return vwPessoaWithOSRepository.findAll(pageRequest);		
 	}
 
 
@@ -47,16 +53,27 @@ public class PessoaController {
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"nome"})
-    public ResponseEntity<Collection<Pessoa>> findPieWithName(@RequestParam(value="nome") String nome) {
-        //return new ResponseEntity<>(repository.findPessoaWithPartOfName(nome), HttpStatus.OK);
-    	return new ResponseEntity<>(repository.findByNomeContaining(nome), HttpStatus.OK);
+    public ResponseEntity<Collection<VWPessoaWithOS>> findPessoaWithName(@RequestParam(value="nome") String nome) {
+        return new ResponseEntity<>(vwPessoaWithOSRepository.findByNomeContaining(nome), HttpStatus.OK);
     	
-    }	
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, params = {"telefone"})
+    public ResponseEntity<Collection<VWPessoaWithOS>> findPessoaWithTelefone(@RequestParam(value="telefone") String telefone) {
+        return new ResponseEntity<>(vwPessoaWithOSRepository.findByTelefoneContaining(telefone), HttpStatus.OK);
+    	
+    }
 	
 	
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addPessoa(@RequestBody Pessoa input) {
         return new ResponseEntity<>(repository.save(input), HttpStatus.CREATED);
     }
+    
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public ResponseEntity<?> updatePessoa(@RequestBody Pessoa input) {
+    	return new ResponseEntity<>(repository.save(input), HttpStatus.OK);
+    }
+
 
 }

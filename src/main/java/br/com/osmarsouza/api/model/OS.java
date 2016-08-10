@@ -1,26 +1,35 @@
 package br.com.osmarsouza.api.model;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-public class OS extends AbstractModel<Long> {
+public class OS implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@SequenceGenerator(name="os_id_seq",
+     sequenceName="os_id_seq",
+     allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,
+  	generator="os_id_seq")
+	@Column(updatable=false)
+	private long id;
 	
 	@ManyToOne
 	@JoinColumn(name="idpessoa")
@@ -36,6 +45,7 @@ public class OS extends AbstractModel<Long> {
 	private String numeroserie;
 	@Column(name="defeitoreclamado")
 	private String defeitoreclamado;
+	@Column(name="retirado", columnDefinition="String DEFAULT 'N'")
 	private String retirado;
 	@ManyToOne
 	@JoinColumn(name="tipogarantia_id")
@@ -44,12 +54,17 @@ public class OS extends AbstractModel<Long> {
 	private Integer os_anterior_id;
 	private String notafiscal;
 	private String observacoes;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(columnDefinition="Timestamp DEFAULT CURRENT_Timestamp", insertable=false, updatable = false)
 	private Date created_at;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(columnDefinition="Timestamp DEFAULT CURRENT_Timestamp", insertable=false)
 	private Date updated_at;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date deleted_at;
 	
 	/*
-
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="situacao_os", joinColumns=
 	{@JoinColumn(name="os_id")}, inverseJoinColumns=
@@ -57,7 +72,16 @@ public class OS extends AbstractModel<Long> {
 	private List<SituacaoOS> situacoes;
 	*/
 	
-	public Pessoa getPessoa() {
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+	    this.id = id;
+	}
+
+	
+	public Pessoa getPessoa() {	
 		return pessoa;
 	}
 	public void setPessoa(Pessoa pessoa) {
