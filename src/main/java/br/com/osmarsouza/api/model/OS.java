@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity
 public class OS implements Serializable {
@@ -58,6 +59,7 @@ public class OS implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(columnDefinition="Timestamp DEFAULT CURRENT_Timestamp", insertable=false, updatable = false)
 	private Date created_at;
+	@Version
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(columnDefinition="Timestamp DEFAULT CURRENT_Timestamp", insertable=false)
 	private Date updated_at;

@@ -3,11 +3,20 @@ package br.com.osmarsouza.api.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity
 @Table(name="situacao_os")
@@ -19,6 +28,12 @@ public class SituacaoOS implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@SequenceGenerator(name="situacao_os_id_seq",
+    sequenceName="situacao_os_id_seq",
+    allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,
+ 	generator="situacao_os_id_seq")
+	@Column(updatable=false)	
 	private long id;
 	
 	/*
@@ -38,7 +53,14 @@ public class SituacaoOS implements Serializable {
 	@JoinColumn(name="users_id")	
 	private Users usuario;
 	private String observacoes;
+	
+	@Basic(optional=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_at", columnDefinition="Timestamp DEFAULT CURRENT_Timestamp", insertable=false, updatable = false)
 	private Date created_at;
+	@Version
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(columnDefinition="Timestamp DEFAULT CURRENT_Timestamp")
 	private Date updated_at;
 	private Date deleted_at;
 	
@@ -102,9 +124,11 @@ public class SituacaoOS implements Serializable {
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
+	
 	public Date getCreated_at() {
 		return created_at;
 	}
+	
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
@@ -116,5 +140,14 @@ public class SituacaoOS implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}	
+	}
+
+	public Date getDeleted_at() {
+		return deleted_at;
+	}
+
+	public void setDeleted_at(Date deleted_at) {
+		this.deleted_at = deleted_at;
+	}
+	
 }

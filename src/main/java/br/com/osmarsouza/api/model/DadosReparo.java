@@ -2,11 +2,17 @@ package br.com.osmarsouza.api.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "dadosreparo") 
@@ -18,6 +24,12 @@ public class DadosReparo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@SequenceGenerator(name="dadosreparo_id_seq",
+     sequenceName="dadosreparo_id_seq",
+     allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,
+  	generator="dadosreparo_id_seq")
+	@Column(updatable=false)
 	private long id;
 	private long os_id;
 	private String descricao;
@@ -25,8 +37,14 @@ public class DadosReparo implements Serializable {
 	private BigDecimal valorpecas;
 	private BigDecimal taxatransporte;
 	private long users_id;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(columnDefinition="Timestamp DEFAULT CURRENT_Timestamp", insertable=false, updatable = false)
 	private Date created_at;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(columnDefinition="Timestamp DEFAULT CURRENT_Timestamp", insertable=false, updatable = false)
 	private Date updated_at;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date deleted_at;
 	
 	public long getId() {

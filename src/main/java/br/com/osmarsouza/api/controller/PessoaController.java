@@ -40,6 +40,30 @@ public class PessoaController {
 		
 		return vwPessoaWithOSRepository.findAll(pageRequest);		
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, params = {"page", "offset", "nome"})
+	public Page<VWPessoaWithOS> getAllByNome(
+			@RequestParam("page") int page, 
+			@RequestParam("offset") int offset,
+			@RequestParam("nome") String nome){
+	
+		
+		PageRequest pageRequest = new PageRequest(page - 1, offset, Sort.Direction.ASC, "nome");
+		
+		return vwPessoaWithOSRepository.findByNomeContaining(pageRequest, nome.toUpperCase());		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, params = {"page", "offset", "telefone"})
+	public Page<VWPessoaWithOS> getAllByTelefone(
+			@RequestParam("page") int page, 
+			@RequestParam("offset") int offset,
+			@RequestParam("telefone") String telefone){
+	
+		
+		PageRequest pageRequest = new PageRequest(page - 1, offset, Sort.Direction.ASC, "nome");
+		
+		return vwPessoaWithOSRepository.findByTelefoneContaining(pageRequest, telefone);		
+	}
 
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -52,19 +76,7 @@ public class PessoaController {
         return new ResponseEntity<>(repository.findOne(id),HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = {"nome"})
-    public ResponseEntity<Collection<VWPessoaWithOS>> findPessoaWithName(@RequestParam(value="nome") String nome) {
-        return new ResponseEntity<>(vwPessoaWithOSRepository.findByNomeContaining(nome), HttpStatus.OK);
-    	
-    }
-    
-    @RequestMapping(method = RequestMethod.GET, params = {"telefone"})
-    public ResponseEntity<Collection<VWPessoaWithOS>> findPessoaWithTelefone(@RequestParam(value="telefone") String telefone) {
-        return new ResponseEntity<>(vwPessoaWithOSRepository.findByTelefoneContaining(telefone), HttpStatus.OK);
-    	
-    }
-	
-	
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addPessoa(@RequestBody Pessoa input) {
         return new ResponseEntity<>(repository.save(input), HttpStatus.CREATED);

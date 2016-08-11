@@ -11,9 +11,9 @@ import br.com.osmarsouza.api.model.VWPessoaWithOS;
 
 public interface VWPessoaWithOSRepository extends CrudRepository<VWPessoaWithOS, Long> {
 	
-	Page<VWPessoaWithOS> findAll(Pageable pageAble);
+	Page<VWPessoaWithOS> findAll(Pageable pageable);
 	
-	List<VWPessoaWithOS> findByNomeContaining(String nome);
+	Page<VWPessoaWithOS> findByNomeContaining(Pageable pageable, String nome);
 
-	List<VWPessoaWithOS> findByTelefoneContaining(String telefone);
+	Page<VWPessoaWithOS> findByTelefoneContaining(Pageable pageable, String telefone);
 }

@@ -1,6 +1,7 @@
 package br.com.osmarsouza.api.controller;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -80,6 +81,7 @@ public class OSController {
 		return repository.findOne(id);
 	}
 	
+		
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<OS> addOS(@RequestBody OS os) {
@@ -95,12 +97,50 @@ public class OSController {
 		
 	}
 	
+	/*---------------------------------------------------------------------------------------------------
+	 * 
+	 *                                     SITUAÇÕES
+	 * 
+	 *---------------------------------------------------------------------------------------------------*/
 	
+
 	@RequestMapping("/{id}/situacoes")
 	public List<SituacaoOS> getSituacoes(@PathVariable long id) {
 		return situacaoRepository.getAllByos_id(id);
 		
+	}	
+	
+	@RequestMapping(value="/{id}/situacoes", method=RequestMethod.POST)
+	public ResponseEntity<SituacaoOS> addStiaucao(@RequestBody SituacaoOS situacao) {
+		
+		Users usuario = new Users();
+		usuario.setId(1L);
+		situacao.setUsuario(usuario);
+		
+		System.out.println("A situacao passada é: ");
+		System.out.println(situacao.getOs_id());
+		System.out.println(situacao.getTipoSituacao().getId());
+		
+		
+		return new ResponseEntity<SituacaoOS>(situacaoRepository.save(situacao), HttpStatus.CREATED);
 	}
+	
+	@RequestMapping(value="/{id}/situacoes", method=RequestMethod.PUT)
+	public ResponseEntity<SituacaoOS> deleteSituacao(@RequestBody SituacaoOS situacao) {
+		
+		//A exclusão é lógica
+		
+		situacao.setDeleted_at(new Date());
+		
+		return new ResponseEntity<SituacaoOS>(situacaoRepository.save(situacao), HttpStatus.OK);
+	}
+		
+	
+	/*---------------------------------------------------------------------------------------------------
+	 * 
+	 *                                     DADOS REPARO
+	 * 
+	 *---------------------------------------------------------------------------------------------------*/
 	
 	@RequestMapping("/{id}/dadosreparo")
 	public ResponseEntity<?> getDadosReparo(@PathVariable long id) {
@@ -111,5 +151,17 @@ public class OSController {
 		else
 		   return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);	
 		
-	}	
+	}
+	
+	@RequestMapping(value="/{id}/dadosreparo", method=RequestMethod.POST)
+	public ResponseEntity<DadosReparo> addDadosReparo(@RequestBody DadosReparo dadosReparo) {
+		return new ResponseEntity<DadosReparo>(dadosReparoRepository.save(dadosReparo), HttpStatus.CREATED);
+		
+	}
+	
+	@RequestMapping(value="/{id}/dadosreparo", method=RequestMethod.PUT)
+	public ResponseEntity<DadosReparo> updateDadosReparo(@RequestBody DadosReparo dadosReparo) {
+		return new ResponseEntity<DadosReparo>(dadosReparoRepository.save(dadosReparo), HttpStatus.OK);
+		
+	}
 }
