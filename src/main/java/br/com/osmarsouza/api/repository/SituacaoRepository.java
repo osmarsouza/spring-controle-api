@@ -15,7 +15,7 @@ import br.com.osmarsouza.api.model.SituacaoOS;
 @RepositoryRestResource(collectionResourceRel = "situacoes", path = "situacoes")
 public interface SituacaoRepository extends PagingAndSortingRepository<SituacaoOS, Long> {
 
-	@Query("SELECT so FROM SituacaoOS so where so.os_id = :os_id "
+	@Query("SELECT so FROM SituacaoOS so where so.os.id = :os_id "
 			+ " AND so.deleted_at is null ORDER BY created_at Desc")
 	List<SituacaoOS> getAllByos_id(@Param("os_id") long os_id);
 }

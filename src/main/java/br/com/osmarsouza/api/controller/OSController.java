@@ -86,6 +86,8 @@ public class OSController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<OS> addOS(@RequestBody OS os) {
 		
+		os.setCreated_at(new Date());
+		
 		OS novaOS = repository.save(os);
 		
 		SituacaoOS situacao = new SituacaoOS(novaOS.getId(), TipoSituacao.TIPO_SITUACAO_AORCAR, 1 );
@@ -118,7 +120,7 @@ public class OSController {
 		situacao.setUsuario(usuario);
 		
 		System.out.println("A situacao passada é: ");
-		System.out.println(situacao.getOs_id());
+		//System.out.println(situacao.getOs_id());
 		System.out.println(situacao.getTipoSituacao().getId());
 		
 		

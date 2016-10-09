@@ -1,6 +1,10 @@
 package br.com.osmarsouza.api.controller;
 
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +24,9 @@ import br.com.osmarsouza.api.model.Pessoa;
 import br.com.osmarsouza.api.model.VWPessoaWithOS;
 import br.com.osmarsouza.api.repository.PessoaRepository;
 import br.com.osmarsouza.api.repository.VWPessoaWithOSRepository;
+import br.com.osmarsouza.api.service.PessoaService;
+import br.com.osmarsouza.dto.PessoaDTO;
+import br.com.osmarsouza.util.NativeQueryResultToBean;
 
 @RestController
 @RequestMapping("pessoas")
@@ -30,6 +37,9 @@ public class PessoaController {
 	
 	@Autowired
 	private VWPessoaWithOSRepository vwPessoaWithOSRepository;
+	
+	@Autowired
+	PessoaService service;
 	
 	
 	@RequestMapping(method = RequestMethod.GET, params = {"page", "offset"})
@@ -62,6 +72,8 @@ public class PessoaController {
 		
 		PageRequest pageRequest = new PageRequest(page - 1, offset, Sort.Direction.ASC, "nome");
 		
+		System.out.println("Passei na função por telefone");
+		
 		return vwPessoaWithOSRepository.findByTelefoneContaining(pageRequest, telefone);		
 	}
 
@@ -86,6 +98,15 @@ public class PessoaController {
     public ResponseEntity<?> updatePessoa(@RequestBody Pessoa input) {
     	return new ResponseEntity<>(repository.save(input), HttpStatus.OK);
     }
+    
 
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/qtdos/{id}")
+    public ResponseEntity<?> getPessoaComQtdOS(@PathVariable Integer id) throws ClassNotFoundException {
+    	
+    	List<PessoaDTO> lista = service.getPessoaComQtdOS(id);
+    	
+    	return new ResponseEntity<>(lista, HttpStatus.OK);
+    }
 
 }

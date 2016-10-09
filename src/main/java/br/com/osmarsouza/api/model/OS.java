@@ -2,14 +2,18 @@ package br.com.osmarsouza.api.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,6 +39,7 @@ public class OS implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="idpessoa")
 	private Pessoa pessoa;
+	
 	@ManyToOne
 	@JoinColumn(name="aparelho_id")
 	private Aparelho aparelho;
@@ -57,7 +62,7 @@ public class OS implements Serializable {
 	private String observacoes;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(columnDefinition="Timestamp DEFAULT CURRENT_Timestamp", insertable=false, updatable = false)
+	@Column(columnDefinition="Timestamp DEFAULT CURRENT_Timestamp", updatable = false)
 	private Date created_at;
 	@Version
 	@Temporal(TemporalType.TIMESTAMP)
@@ -66,13 +71,10 @@ public class OS implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date deleted_at;
 	
-	/*
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name="situacao_os", joinColumns=
-	{@JoinColumn(name="os_id")}, inverseJoinColumns=
-  	{@JoinColumn(name="id")})
+	
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="os")
 	private List<SituacaoOS> situacoes;
-	*/
+	
 	
     public Long getId() {
         return this.id;

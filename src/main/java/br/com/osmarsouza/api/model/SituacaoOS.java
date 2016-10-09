@@ -6,17 +6,19 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="situacao_os")
@@ -36,12 +38,12 @@ public class SituacaoOS implements Serializable {
 	@Column(updatable=false)	
 	private long id;
 	
-	/*
-	@ManyToOne
+	@JsonIgnore
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="os_id")
 	private OS os;
-	*/
-	private long os_id;
+	
+	//private long os_id;
 	
 	@ManyToOne
 	@JoinColumn(name="tipo_situacao_id")
@@ -69,7 +71,7 @@ public class SituacaoOS implements Serializable {
 	}
 	
 	public SituacaoOS(long os_id, int tipoSituacao_id, long user_id) {
-		this.os_id = os_id;
+		//this.os_id = os_id;
 		this.tipoSituacao = new TipoSituacao(tipoSituacao_id);
 		this.usuario = new Users(user_id);
 		this.created_at = new Date();
@@ -84,14 +86,16 @@ public class SituacaoOS implements Serializable {
 		this.id = id;
 	}
 	
-	/*
+	
 	public OS getOs() {
 		return os;
 	}
 	public void setOs(OS os) {
 		this.os = os;
 	}
-	*/
+	
+	
+	/*
 	public long getOs_id() {
 		return os_id;
 	}
@@ -99,6 +103,7 @@ public class SituacaoOS implements Serializable {
 	public void SetOs_id(long os_id) {
 		this.os_id = os_id;
 	}
+	*/
 	
 	public TipoSituacao getTipoSituacao() {
 		return tipoSituacao;

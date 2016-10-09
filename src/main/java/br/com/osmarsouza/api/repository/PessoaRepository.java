@@ -6,11 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.osmarsouza.api.model.Pessoa;
 
@@ -33,6 +29,12 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Long> {
 	List<Pessoa> findByNomeLike(String nome);
 	List<Pessoa> findByNomeStartingWith(String nome);
 	List<Pessoa> findByNomeEndingWith(String nome);
-
+	
+	@Query(value="SELECT p.idpessoa as id, p.nome, p.cpf_cnpj as cpfCnpj, Count(*) "
+			+ " FROM pessoa p, os o"
+			+ " where p.idpessoa = :id"
+			+ " and p.idpessoa = o.idpessoa"
+			+ " group by p.idpessoa, nome", nativeQuery = true)
+	List<Object[]> findByIdWithQtdOS(@Param("id") Integer id);
 }
 

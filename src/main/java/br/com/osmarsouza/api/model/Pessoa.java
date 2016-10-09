@@ -2,14 +2,20 @@ package br.com.osmarsouza.api.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -42,6 +48,11 @@ public class Pessoa implements Serializable {
 	private String observacoes;
 	private Date created_at;
 	private Date updated_at;
+	
+	@JsonIgnore /* Se não usar vai dar Cros Reference um carregando o outro */
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="pessoa")
+	private List<OS> oss;
+	
 	
 	public Long getId() {
 		return id;
@@ -127,5 +138,13 @@ public class Pessoa implements Serializable {
 	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
 	}
+	
+   public List<OS> getOss() {
+	   return this.oss;
+   }
+   
+   public void setOss(List<OS> oss) {
+	   this.oss = oss;
+   }
 		
 }
